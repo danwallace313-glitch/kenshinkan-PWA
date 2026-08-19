@@ -1,25 +1,29 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#000000">
-  <meta name="application-name" content="Kenshinkan Dojo">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="Kenshinkan">
-  <link rel="manifest" href="/manifest.webmanifest">
-  <link rel="apple-touch-icon" href="/icon-192.png">
-  <title>Kenshinkan Dojo</title>
-  <style>
-    html,body{margin:0;width:100%;height:100%;background:#000}
-    iframe{border:0;width:100%;height:100%;display:block;background:#fff}
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<meta name="application-name" content="Kenshinkan Dojo">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="Kenshinkan">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="apple-touch-icon" href="/icon-192.png">
+<title>Kenshinkan Dojo</title>
+<style>
+*{box-sizing:border-box} body{margin:0;min-height:100vh;background:#000;color:#fff;font-family:Arial,sans-serif;text-align:center;padding:38px 20px} .logo{width:150px;height:150px;border-radius:50%;margin:0 auto 18px} h1{font-size:28px;margin:0 0 6px} .tag{margin:0 0 30px;color:#ddd;font-size:16px}.links{max-width:480px;margin:auto;display:grid;gap:14px}.links a{display:block;padding:17px 20px;border:2px solid #fff;border-radius:9px;color:#fff;text-decoration:none;font-size:18px;font-weight:700;background:#111}.links a:active{background:#333}.status{color:#aaa;margin-top:25px;font-size:13px}.fallback{color:#fff}
+</style>
 </head>
 <body>
-  <iframe src="https://kenshinkan-dojo-member-links.bmaba.app/" title="Kenshinkan Dojo Member Hub"></iframe>
-  <script>
-    if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js');
-  </script>
+<img class="logo" src="/icon-512.png" alt="Kenshinkan Dojo">
+<h1>Kenshinkan Dojo</h1>
+<p class="tag">Way of the Samurai</p>
+<div id="links" class="links"><span>Loading member links…</span></div>
+<p id="status" class="status"></p>
+<script>
+if('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js');
+(async()=>{try{const r=await fetch('/api/links',{cache:'no-store'});if(!r.ok)throw new Error();const data=await r.json();const box=document.getElementById('links');box.innerHTML='';data.links.forEach(x=>{const a=document.createElement('a');a.href=x.url;a.textContent=x.label;a.target='_blank';a.rel='noopener';box.appendChild(a)});if(!data.links.length)throw new Error()}catch(e){document.getElementById('links').innerHTML='<a class="fallback" href="https://kenshinkan-dojo-member-links.bmaba.app/">Open Member Hub</a>';document.getElementById('status').textContent='Live links temporarily unavailable.'}})();
+</script>
 </body>
 </html>
